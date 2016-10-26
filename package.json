@@ -13,7 +13,8 @@
     "socket.io-client": "*",
     "socket.io-stream": "*",
     "mediasource": "*",
-    "ramda": "*"
+    "ramda": "*",
+    "node-static": "*"
   },
   "devDependencies": {
     "iso-bmff": "*"

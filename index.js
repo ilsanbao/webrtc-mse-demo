@@ -20,14 +20,10 @@ peer.on('error', function (err) {
 
 peer.on('signal', function (data) {
     console.log('SIGNAL', JSON.stringify(data));
-    pSocket.emit(data.type, data);
+    pSocket.emit('message', data);
 });
 
-pSocket.on('send_offer', function (data) {
-    peer.signal(data);
-});
-
-pSocket.on('send_answer', function (data) {
+pSocket.on('message', function (data) {
     peer.signal(data);
 });
 

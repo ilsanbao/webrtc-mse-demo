@@ -1,9 +1,19 @@
 //socket.io
 var _ = require('ramda');
-var io = require('socket.io')();
+var http = require('http');
+var socketIO = require('socket.io')();
+var nodeStatic = require('node-static');
+var fileServer = new(nodeStatic.Server)();
+
 var ss = require('socket.io-stream');
 var fs = require('fs');
 var path = require('path');
+
+var app = http.createServer(function(req, res) {
+    fileServer.serve(req, res);
+}).listen(process.env.PORT || '3000');
+
+var io = socketIO.listen(app);
 
 io.origins('*:*');
 io.of('/video').on('connection', function (socket) {
@@ -31,16 +41,10 @@ io.of('/p2p').on('connection', function (socket) {
     //connected
     socket.emit('connected', {socketId: socket.id});
 
-    //offer
-    socket.on('offer', function (data) {
-        console.log('receive offer');
-        socket.broadcast.emit('send_offer', data);
-    });
-
-    //answer
-    socket.on('answer', function (data) {
-        console.log('receive answer');
-        socket.broadcast.emit('send_answer', data);
+    //relay message
+    socket.on('message', function (data) {
+        console.log('got message');
+        socket.broadcast.emit('message', data);
     });
 
     // when the user disconnects..
@@ -48,5 +52,3 @@ io.of('/p2p').on('connection', function (socket) {
         console.log('disconnected');
     });
 });
-
-io.listen(process.env.PORT || '3000');
