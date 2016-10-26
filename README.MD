@@ -1,6 +1,6 @@
 #WEBRTC & MSE demo
 
-#useage
+#usage
 - git clone
 - npm install static -g & npm install browserify -g
 - npm install
