@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -s kiwi-client -e ./ | uglifyjs -c warnings=false -m > bundle.js"
+    "build": "browserify -t [ babelify --presets [ es2015 ] ] -s kiwi-client -e ./ | uglifyjs -c warnings=false -m > bundle.js"
   },
   "dependencies": {
     "simple-peer": "^6.0.4",
@@ -14,9 +14,17 @@
     "socket.io-stream": "*",
     "mediasource": "*",
     "ramda": "*",
-    "node-static": "*"
+    "node-static": "*",
+    "debug": "^2.0.0",
+    "randombytes": "^2.0.3",
+    "safe-buffer": "^5.0.0",
+    "ngeohash": "*",
+    "inherits": "^2.0.1",
+    "ipip": "https://github.com/woodenfish/node-ipip.git"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "babelify": "*",
     "iso-bmff": "*"
   },
   "browser": {
